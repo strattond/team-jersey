@@ -1,7 +1,6 @@
-import { useState } from "react";
 import Jersey from "./Jersey";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { selectJerseyById, updateDroppedImage } from "../state/images";
+import { selectJerseyById, updateDroppedJersey, setEditing } from "../state/jerseys";
 import { useDraggable } from "@dnd-kit/core";
 
 interface DroppedImageProps {
@@ -13,16 +12,17 @@ interface DroppedImageProps {
 }
 
 export const DraggableJersey = ({ id, left, top, appID }: DroppedImageProps) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const isEditing = useAppSelector((state) => state.jerseys.editing);
   const jersey = useAppSelector(selectJerseyById(appID));
   const dispatch = useAppDispatch();
 
-  const handleBlur = () => { setIsEditing(false); };
-  const handleSvgClick = () => { setIsEditing(true); };
+
+  const handleBlur = () => { dispatch(setEditing(false)); };
+  const handleSvgClick = () => { dispatch(setEditing(true)); };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updates = { jersey: event.target.value }
-    dispatch(updateDroppedImage({ id: appID, updates }));
+    dispatch(updateDroppedJersey({ id: appID, updates }));
   };
 
 

@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { imageSlice } from './images'
+import { jerseySlice } from './jerseys'
 // ...
 
 export const store = configureStore({
     reducer: {
-        images: imageSlice.reducer
+        jerseys: jerseySlice.reducer
     },
 })
 

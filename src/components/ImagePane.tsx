@@ -1,10 +1,16 @@
+import { Box } from "@mui/material";
 import { DraggableImage } from "./DraggableImage";
 
 const ImagePane = () => {
   return (
-    <div className="imagepane" id="imagepanediv">
-      <DraggableImage id="image1" />
-    </div>
+    <Box className="imagepane" id="imagepanediv">
+      <Box className="sourceJersey">
+        <DraggableImage id="image1" />
+      </Box>
+      <Box>
+        
+      </Box>
+    </Box>
   );
 };
 

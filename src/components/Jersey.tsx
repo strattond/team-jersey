@@ -2,16 +2,17 @@ interface JerseyProps {
   shirt?: string;
   sleeve?: string;
   number?: string;
+  label?: string;
   onClick?: () => void;
 }
 
-const Jersey = ({ shirt = 'red', sleeve = 'white', number = "0", onClick = () => { } }: JerseyProps) => {
-  const digits = number.length;
-  const fontSize = digits > 2 ? 10 : 15;
+const Jersey = ({ shirt = 'red', sleeve = 'white', number = "", label = "", onClick = () => { } }: JerseyProps) => {
+  const digFontSize = number.length > 2 ? 10 : 15;
+  const lblFontSize = label.length > 2 ? 10 : 15;
 
   return (
     <div style={{ width: '50px', height: '40px' }}>
-      <svg style={{ width: '50px', height: '40px' }} onDoubleClick={onClick}>
+      <svg style={{ width: '50px', height: '60px' }} onDoubleClick={onClick}>
         <path fill={shirt} opacity="1.000000" stroke="none" name="body"
           d="M 32.5,2.8
            L 38.0,2.8
@@ -49,17 +50,39 @@ z" />
            L 5.0,17.2
            L 6.5,16.2
 z" />
-        {/* Jersey number / label */}
+        {/* Jersey number */}
         <text
           x={25}
           y={25}
           textAnchor="middle"
-          fontSize={fontSize}
+          fontSize={digFontSize}
           fontFamily="Arial, sans-serif"
           fill="white"
         >
           {number}
         </text>
+        {/* Jersey label */}
+        {label.length > 0 ?
+          <>
+            <path fill={'#000000'} opacity="1.000000" stroke="none" name="sleeveLeft"
+              d="M 3.5,42
+         L  46.0,42
+         L  46.0,52
+         L   3.5,52
+z" />
+            <text
+              x={25}
+              y={50}
+              textAnchor="middle"
+              fontSize={lblFontSize}
+              fontFamily="Arial, sans-serif"
+              fill="white"
+            >
+              {label}
+            </text>
+          </>
+          : <></>
+        }
 
       </svg>
     </div>

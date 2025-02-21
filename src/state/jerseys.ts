@@ -12,13 +12,15 @@ interface DroppedJersey {
 interface JerseyState {
   jerseys: DroppedJersey[],
   nextID: number,
-  editing: boolean
+  editing: boolean,
+  underEdit?: string
 }
 
 const initialState: JerseyState = {
   jerseys: [],
   nextID: 0,
-  editing: false
+  editing: false,
+  underEdit: undefined
 }
 
 export const jerseySlice = createSlice({
@@ -41,8 +43,13 @@ export const jerseySlice = createSlice({
         state.jerseys[index] = { ...state.jerseys[index], ...updates };
       }
     },
-    setEditing: (state, action: PayloadAction<boolean>) => {
-      state.editing = action.payload
+    setEditing: (state, action: PayloadAction<{ editing: boolean, underEdit?: string }>) => {
+      state.editing = action.payload.editing;
+      if (!action.payload.editing) {
+        state.underEdit = undefined
+      } else {
+        state.underEdit = action.payload.underEdit;
+      }
     }
   },
 })

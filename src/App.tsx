@@ -16,7 +16,7 @@ const App = () => {
   const touchSensor = useSensor(TouchSensor, { activationConstraint, });
   const keyboardSensor = useSensor(KeyboardSensor, {});
   const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor);
-  const [appID, setAppID] = useState(undefined);
+  const [appID, setAppID] = useState<string|undefined>(undefined);
   const [coords, setCoords] = useState<Coordinates | undefined>(undefined);
   const jersey = useAppSelector(selectJerseyById(appID));
   const [, setIsDragging] = useState(false);

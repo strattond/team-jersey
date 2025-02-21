@@ -1,9 +1,9 @@
 import Jersey from "./Jersey";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { selectJerseyById, updateDroppedJersey, setEditing } from "../state/jerseys";
+import { selectJerseyById, setEditing } from "../state/jerseys";
 import { useDraggable } from "@dnd-kit/core";
 
-interface DroppedImageProps {
+interface DroppedJerseyProps {
   id: string;
   left: number;
   top: number;
@@ -11,21 +11,11 @@ interface DroppedImageProps {
   appID: string;
 }
 
-export const DraggableJersey = ({ id, left, top, appID }: DroppedImageProps) => {
-  const isEditing = useAppSelector((state) => state.jerseys.editing);
+export const DraggableJersey = ({ id, left, top, appID }: DroppedJerseyProps) => {
   const jersey = useAppSelector(selectJerseyById(appID));
   const dispatch = useAppDispatch();
 
-
-  const handleBlur = () => { dispatch(setEditing(false)); };
-  const handleSvgClick = () => { dispatch(setEditing(true)); };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updates = { jersey: event.target.value }
-    dispatch(updateDroppedJersey({ id: appID, updates }));
-  };
-
-
+  const handleSvgClick = () => { dispatch(setEditing({ editing: true, underEdit: appID } )); };
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({ id: id, data: { id: appID } });
   // If we don't add left/top to the transform, then the SVG will be at -left,-top when we start dragging
   // But this throws a kink into the "over" detection
@@ -43,19 +33,7 @@ export const DraggableJersey = ({ id, left, top, appID }: DroppedImageProps) => 
       {...listeners}
       {...attributes}
     >
-      <Jersey onClick={handleSvgClick} number={jersey?.jersey} />
-      {isEditing ? (
-        <input
-          type="text"
-          value={jersey?.jersey || ''}
-          className="overlay-text"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          readOnly={false}
-          autoFocus
-        />
-      ) : (<></>)
-      }
+      <Jersey onClick={handleSvgClick} number={jersey?.jersey} label={jersey?.label} />
     </div>
   );
 };

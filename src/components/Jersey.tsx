@@ -1,3 +1,5 @@
+import { useAppSelector } from "../state/hooks";
+
 interface JerseyProps {
   shirt?: string;
   sleeve?: string;
@@ -9,10 +11,11 @@ interface JerseyProps {
 const Jersey = ({ shirt = 'red', sleeve = 'white', number = "", label = "", onClick = () => { } }: JerseyProps) => {
   const digFontSize = number.length > 2 ? 10 : 15;
   const lblFontSize = label.length > 2 ? 10 : 15;
+  const multiplier = useAppSelector((state) => state.options.multiplier) / 100;
 
   return (
-    <div style={{ width: '50px', height: '40px' }}>
-      <svg style={{ width: '50px', height: '60px' }} onDoubleClick={onClick}>
+    <div style={{ width: `${50 *multiplier}px`, height: `${60 *multiplier}px` }}>
+      <svg onDoubleClick={onClick} viewBox="0 0 50 60" width={50 * multiplier} height={60 * multiplier}>
         <path fill={shirt} opacity="1.000000" stroke="none" name="body"
           d="M 32.5,2.8
            L 38.0,2.8

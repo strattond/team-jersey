@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { jerseySlice } from './jerseys'
+import { globalOptionsSlice } from './globalOptions.ts'
 // ...
 
 export const store = configureStore({
     reducer: {
-        jerseys: jerseySlice.reducer
+        jerseys: jerseySlice.reducer,
+        options: globalOptionsSlice.reducer
     },
 })
 

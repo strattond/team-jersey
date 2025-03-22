@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from './state/hooks';
 import { addDroppedJersey, selectJerseyById, updateDroppedJersey } from './state/jerseys';
 import { Coordinates } from '@dnd-kit/utilities';
 import { Box, createTheme, CssBaseline, ThemeProvider } from '@mui/material';
+import GlobalOptionsPane from './components/GlobalOptionsPane';
 
 const App = () => {
 
@@ -42,7 +43,8 @@ const App = () => {
   });
   return (
     <ThemeProvider theme={darkTheme}>
-      <CssBaseline />    <DndContext
+      <CssBaseline />
+      <DndContext
         autoScroll={false}
         sensors={sensors}
         onDragStart={() => setIsDragging(true)}
@@ -83,7 +85,10 @@ const App = () => {
         onDragCancel={() => setIsDragging(false)}
       >
         <Box className="container">
-          <ImagePane />
+          <div>
+            <ImagePane />
+            <GlobalOptionsPane />
+          </div>
           <DropPane />
         </Box>
       </DndContext>
